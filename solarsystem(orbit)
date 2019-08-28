@@ -4,7 +4,7 @@ from visual.graph import *
 
 scene = display (title = 'Planets Orbiting the Sun', width = 800, height = 800, range = vec(25000, 25000, 25000), center = vec(1000, 0, 0))
 scene.autoscale = True 
-
+#그래프 설정
 sun = sphere (pos=vec(0,0,0), radius = 100, texture = textures.stucco, color = color.yellow, mass = 10)
 
 mercury = sphere (pos = vec(200,0,0), radius = 50, texture = textures.wood, color = color.red)
@@ -46,9 +46,9 @@ neptune.velocity = vector(0,0,23)
 pluto = sphere (pos = vec(20534.968,0,0), radius = 75, texture = textures.wood, color = color.orange)
 pluto.trail = curve(color = pluto.color)
 pluto.velocity = vector(0,0,.01)
-
+# 각 천체들의 속도, 크기, 색, 궤도등을 설정
 G = -6.7*10**-4
-
+# 만유인력 상수 설정
 m_sun = 2*10**10
 m_mercury = 3.29*10**3
 m_venus = 4.87*10**4
@@ -61,7 +61,7 @@ m_uranus = 8.68*10**5
 m_neptune = 1.02*10**6
 m_pluto = 1.31*10**2
 m_spaceship =  7.0*10**5
-
+#천체들의 실제 질량 설정
 mercury_RealRatio = 1.600
 venus_RealRatio = 1.177
 earth_RealRatio = 1.000
@@ -71,23 +71,23 @@ saturn_RealRatio = 0.324
 uranus_RealRatio = 0.228
 neptune_RealRatio = 0.182
 pluto_RealRatio = 0.158
-
+#천체들의 실제 공전 속도 설정
 t = 0
 deltat = .01
 time_interval = 0.05
 time_interval_int = int(time_interval/deltat)
-
+#시간 t=0에서 부터 0.01초 간격으로 결과 보임
 graphpos = gdisplay (x=600, y=0, xtitle = "Time", ytitle="Position", width = 600, height=400, title="Position vs.Time of Earth")
 earthposx = gcurve(gdisplay=graphpos, color = color.blue)
 
 graphv = gdisplay(x=600, y=500, xtitle = "Time", ytitle="Velocity", width = 600, height = 400, foreground = color.black, background = color.white, title= "Velocity vs. Time of Earth")
-earthvelocity = gcurve(gdisplay = graphv, color = color.blue)
+earthvelocity = gcurve(gdisplay = graphv, color = color.blue) # 그래프 축, 크기등 설정
 tlist = []
 vlist = []
 graphGPE = gdisplay (x=800, y=500, xtitle = "Position", ytitle ="Gravitational Potential Energy", width = 600, height = 400, title = "GPE vs. Position of Earth to Sun")
 earthGPE = gcurve(gdisplay = graphGPE, color = color.green)
 
-graphSpeedRatios = gdisplay (x=600, y=500, xtitle = "Time", ytitle="Speed Ratio", width = 600, height = 400, title = "Planet Speed Ratios to Earth vs. Time")
+graphSpeedRatios = gdisplay (x=600, y=500, xtitle = "Time", ytitle="Speed Ratio", width = 600, height = 400, title = "Planet Speed Ratios to Earth vs. Time") # 지구의 시간에 따른 속도 그래프로 표현
 mercuryRatio = gcurve(gdisplay = graphSpeedRatios, color = color.red)
 mercuryRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.red)
 
@@ -99,7 +99,7 @@ earthRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.yellow)
 
 marsRatio = gcurve(gdisplay = graphSpeedRatios, color = color.green)
 marsRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.green)
-
+ 
 jupiterRatio = gcurve(gdisplay = graphSpeedRatios, color = color.cyan)
 jupiterRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.cyan)
 
@@ -114,8 +114,9 @@ neptuneRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.red)
 
 plutoRatio = gcurve(gdisplay = graphSpeedRatios, color = color.orange)
 plutoRealRatio = gdots(gdisplay = graphSpeedRatios, color = color.orange)
+# 태양에 대한 지구의 위치에 따른 지구의 중력 퍼텐셜 에너지 그래프와 시간에 따른 지구에 대한 행성들의 상대속도 그래프로 표현
 
-while True :
+while True : # 각행성들의 위치를 앞에서 설정한 내용을 바탕으로 벡터로 설정 질량 값을 포함한 만유인력의 크기 설정
     rate(10000)
     
     mercury.trail.append(pos=mercury.pos)
@@ -208,8 +209,9 @@ while True :
     pluto.rotate(angle = radians(15), axis = vec(0,1,0))
     if distancePluto  <= sun.radius : break
     pluto_Ratio = mag(pluto.velocity)/mag(earth.velocity) 
-    
+    # 각 천체들의 움직인 경로를 보이게 설정
     earthposx.plot(pos=(t,earth.pos.x))
     earthvelocity.plot(pos=(t,earth.velocity.x))
     earthGPE.plot(pos=(earth.pos.x,earth_GPE))
+    # 지구의 움직임을 그래프로 
     
